@@ -1,0 +1,43 @@
+html, body {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    background: url("fon.jpg") center center/cover no-repeat;
+    font-family: Verdana, "Geneva CY", "DejaVu Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-width: 768px;
+}
+
+div[ng-controller] {
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 35px auto;
+}
+
+.customSelect + .customSelect {
+    margin-left: 20px;
+}
+
+h1, p {
+    max-width: 600px;
+    margin: 35px auto;
+    color: white;
+}
+
+p {
+    margin-top: auto;
+}
+
+p a {
+    color: inherit;
+}
