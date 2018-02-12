@@ -19,9 +19,15 @@ Or see demo on [this link](https://loymax.github.io/lmx-custom-select/)
 
 2. Add lmx-custom-select.min.js
 
-3. Add to the page [minimum required CSS](https://github.com/loymax/lmx-custom-select/wiki/minimum-required-CSS) for styling 
+3. Add to the page [minimum required CSS](https://github.com/loymax/lmx-custom-select/wiki/minimum-required-CSS) for styling
 
-4. Make select!
+4. Add modules
+
+```javascript
+var App = angular.module('app', ['ngOutsideClick', 'lmxCustomSelect']);
+```
+
+5. Make select!
 
 ```html
 <div
