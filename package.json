@@ -2,15 +2,27 @@
   "name": "lmx-custom-select",
   "version": "1.0.0",
   "description": "сustomizable select for AngularJS",
-  "main": "index.js",
-  "scripts": {
-    "preinstall": "npm install -g babel-cli uglify-js"
-  },
+  "main": "dist/lmx-custom-select.js",
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loymax/lmx-custom-select.git"
+  },
+  "scripts": {
+    "preinstall": "npm install -g babel-cli uglify-js"
+  },
+  "keywords": [
+    "AngularJS",
+    "select"
+  ],
   "author": "Loymax",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loymax/lmx-custom-select/issues"
+  },
+  "homepage": "https://github.com/loymax/lmx-custom-select",
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
     "shelljs": "^0.7.8"

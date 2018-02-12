@@ -4,7 +4,9 @@ Customizable select for AngularJS
 
 ## Demo
 
-coming soon
+![gif demo](https://raw.githubusercontent.com/loymax/lmx-custom-select/master/demo-lmx-custom-select.gif)
+
+Or see demo on [this link](https://loymax.github.io/lmx-custom-select/)
 
 ## Getting Started 
 
@@ -40,3 +42,7 @@ coming soon
 * caption — title in the drop-down list
 * options — analog of options for select
 * filter-by-text — filtering values
+
+## npm
+
+```npm install lmx-custom-select```
