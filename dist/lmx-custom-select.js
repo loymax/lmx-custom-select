@@ -73,8 +73,8 @@ angular.module('lmxCustomSelect', []).run(['$templateCache', function ($template
 
             var setData = function setData(params) {
                 if (options[1] === 'as' && params) {
-                    $scope.text = $filter('filter')(params.repeat || $scope.repeat, _defineProperty({}, $scope.subValue.value, params.model || $scope.model))[0][$scope.subValue.text];
-                    $scope.value = $scope.model ? $scope.text : $scope.placeholder;
+                    var text = $filter('filter')(params.repeat || $scope.repeat, _defineProperty({}, $scope.subValue.value, params.model || $scope.model));
+                    $scope.value = $scope.model && text.length ? text[0][$scope.subValue.text] : $scope.placeholder;
                 } else {
                     $scope.value = $scope.model || $scope.placeholder;
                 }
