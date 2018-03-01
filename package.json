@@ -1,6 +1,6 @@
 {
   "name": "lmx-custom-select",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "сustomizable select for AngularJS",
   "main": "dist/lmx-custom-select.js",
   "files": [
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/loymax/lmx-custom-select",
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "shelljs": "^0.7.8"
   }

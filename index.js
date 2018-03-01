@@ -7,15 +7,17 @@ angular.module('lmxCustomSelect', [])
                     <input class="customSelect-selected" ng-class="{'_disabled': !model}" ng-click="trigger()" ng-value="value" type="text" readonly />
 
                     <div class="customSelect-scroller__wrapper" ng-class="{'_hide': !isVisible}">
-                        <input class="customSelect-filter" type="text" ng-model="$parent.valueOfFilterByText" ng-if="filterByText" />
-                        
+                        <div class="customSelect-filter__wrapper" ng-if="filterByText">
+                            <input class="customSelect-filter" type="text" ng-model="$parent.valueOfFilterByText" ng-attr-placeholder="{{filterByText.placeholder}}" />
+                        </div>
+                    
                         <div class="customSelect-scroller">
                             <ul class="customSelect-list">
-                                <li class="customSelect-item _disabled" ng-if="caption">{{caption}}</li>
+                                <li class="customSelect-item _caption" ng-if="caption">{{caption}}</li>
                                 <li class="customSelect-item" ng-repeat="value in filteredRepeat = (repeat | filter:valueOfFilterByText)" ng-click="subValue ? select(value[subValue.value]) : select(value)">
                                     {{subValue ? value[subValue.text] : value}}
                                 </li>
-                                <li class="customSelect-item _disabled" ng-if="!filteredRepeat.length">Filter is incorrect</li>
+                                <li class="customSelect-item _incorrect" ng-if="!filteredRepeat.length">{{filterByText.noMatchFound}}</li>
                             </ul>
                         </div>
 
@@ -42,13 +44,21 @@ angular.module('lmxCustomSelect', [])
                 nameVariableForOptions: '@repeat',
                 options: '@',
                 placeholder: '@',
-                caption: '@'
+                caption: '@',
+                filterByText: '<'
             },
             templateUrl: ($element, $attrs) => {
                 return $attrs.templateUrl || 'lmx-custom-select.html';
             },
             link: ($scope, elem, attrs, ngModelController) => {
-                $scope.filterByText = attrs.filterByText !== undefined;
+                $scope.filterByText = attrs.filterByText === undefined ? false : ({
+                    ...{
+                        placeholder: 'Search',
+                        noMatchFound: 'Filter is incorrect',
+                    },
+                    ...$scope.filterByText
+                });
+
                 $scope.valueOfFilterByText = '';
                 $scope[$scope.nameVariableForOptions] = $scope.repeat;
                 $scope.options = attrs.options.replace(attrs.repeat, "repeat");
@@ -99,7 +109,7 @@ angular.module('lmxCustomSelect', [])
 
                 const setData = params => {
                     if (options[1] === 'as' && params) {
-                        var text = $filter('filter')(params.repeat || $scope.repeat, {[$scope.subValue.value]: params.model || $scope.model});
+                        const text = $filter('filter')(params.repeat || $scope.repeat, {[$scope.subValue.value]: params.model || $scope.model});
                         $scope.value = $scope.model && text.length ? text[0][$scope.subValue.text] : $scope.placeholder;
                     } else {
                         $scope.value = $scope.model || $scope.placeholder;
