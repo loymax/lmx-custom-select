@@ -1,6 +1,6 @@
 {
   "name": "lmx-custom-select",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "сustomizable select for AngularJS",
   "main": "dist/lmx-custom-select.js",
   "files": [
