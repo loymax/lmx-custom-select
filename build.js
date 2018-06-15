@@ -1,6 +1,6 @@
 const shell = require('shelljs');
 
-if (shell.exec('babel index.js --out-file dist/lmx-custom-select.js').code !== 0) {
+if (shell.exec('babel index.js --out-file ./dist/lmx-custom-select.js').code !== 0) {
     shell.echo('Error development');
     shell.exit(1);
 } else {

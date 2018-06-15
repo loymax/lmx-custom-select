@@ -4,7 +4,7 @@ angular.module('lmxCustomSelect', [])
         const template = `
             <div class="customSelect">
                 <div outside-click="close()">
-                    <input class="customSelect-selected" ng-class="{'_disabled': !model}" ng-click="trigger()" ng-value="value" type="text" readonly />
+                    <input class="customSelect-selected" ng-class="{'_empty': !model || disabled, '_disabled': disabled}" ng-click="!disabled && trigger()" ng-value="value" type="text" readonly />
 
                     <div class="customSelect-scroller__wrapper" ng-class="{'_hide': !isVisible}">
                         <div class="customSelect-filter__wrapper" ng-if="filterByText">
@@ -45,7 +45,8 @@ angular.module('lmxCustomSelect', [])
                 options: '@',
                 placeholder: '@',
                 caption: '@',
-                filterByText: '<'
+                filterByText: '<',
+                disabled: '<isDisabled'
             },
             templateUrl: ($element, $attrs) => {
                 return $attrs.templateUrl || 'lmx-custom-select.html';
