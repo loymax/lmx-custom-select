@@ -4,8 +4,16 @@ angular.module('lmxCustomSelect', [])
         const template = `
             <div class="customSelect">
                 <div outside-click="close()">
-                    <input class="customSelect-selected" ng-class="{'_empty': !model || disabled, '_disabled': disabled}" ng-click="!disabled && trigger()" ng-value="value" type="text" readonly />
-
+                    <input
+                        class="customSelect-selected" ng-class="{'_empty': !model || disabled, '_disabled': disabled}"
+                        onfocus="$(this).select();" onclick="$(this).select();"
+                        ondragstart="return false" draggable="false"
+                        ondragenter="event.dataTransfer.dropEffect='none'; event.stopPropagation(); event.preventDefault();"
+                        ondragover="event.dataTransfer.dropEffect='none';event.stopPropagation(); event.preventDefault();"
+                        ondrop="event.dataTransfer.dropEffect='none';event.stopPropagation(); event.preventDefault();"
+                        ng-click="!disabled && trigger()" ng-change="select(value, true)" ng-model="value"
+                        type="text" ng-attr-placeholder="{{placeholder}}">
+                        
                     <div class="customSelect-scroller__wrapper" ng-class="{'_hide': !isVisible}">
                         <div class="customSelect-filter__wrapper" ng-if="filterByText">
                             <input class="customSelect-filter" type="text" ng-model="$parent.valueOfFilterByText" ng-attr-placeholder="{{filterByText.placeholder}}" />
@@ -14,7 +22,11 @@ angular.module('lmxCustomSelect', [])
                         <div class="customSelect-scroller">
                             <ul class="customSelect-list">
                                 <li class="customSelect-item _caption" ng-if="caption">{{caption}}</li>
-                                <li class="customSelect-item" ng-repeat="value in filteredRepeat = (repeat | filter:valueOfFilterByText)" ng-click="subValue ? select(value[subValue.value]) : select(value)">
+                                <li class="customSelect-item"
+                                    ng-repeat="value in filteredRepeat = (repeat | filter:valueOfFilterByText)"
+                                    ng-click="subValue ? select(value[subValue.value]) : select(value)"
+                                    ng-attr-title="{{subValue ? value[subValue.text] : value}}"
+                                >
                                     {{subValue ? value[subValue.text] : value}}
                                 </li>
                                 <li class="customSelect-item _incorrect" ng-if="!filteredRepeat.length">{{filterByText.noMatchFound}}</li>
@@ -65,6 +77,7 @@ angular.module('lmxCustomSelect', [])
                 $scope.options = attrs.options.replace(attrs.repeat, "repeat");
 
                 const options = attrs.options.split(/\s+/);
+                var isKeyboardEditMode;
 
                 if (options[1] === 'as') {
                     $scope.subValue = {
@@ -90,8 +103,20 @@ angular.module('lmxCustomSelect', [])
                     }
                 });
 
-                $scope.select = value => {
+                $scope.select = (value, isKeyboardEdit) => {
+                    isKeyboardEditMode = isKeyboardEdit;
                     $scope.close();
+
+                    // если введено значение, валидное для входного списка
+                    // (валидное - это которое совпадает с name полем какого-нибудь объекта входного списка)
+                    if (isKeyboardEdit && angular.isArray($scope.repeat) && angular.isObject($scope.repeat[0])) {
+                        const foundRepeatItem = $scope.repeat.find(function(item){
+                            return item.name.toLowerCase() === value.toLowerCase();
+                        });
+                        if (foundRepeatItem) {
+                            value = foundRepeatItem.value;
+                        }
+                    }
                     $scope.model = value;
                     ngModelController.$setViewValue($scope.model);
                 };
@@ -109,6 +134,9 @@ angular.module('lmxCustomSelect', [])
                 };
 
                 const setData = params => {
+                    if (isKeyboardEditMode) {
+                        return;
+                    }
                     if (options[1] === 'as' && params) {
                         const text = $filter('filter')(params.repeat || $scope.repeat, {[$scope.subValue.value]: params.model || $scope.model});
                         $scope.value = $scope.model && text.length ? text[0][$scope.subValue.text] : $scope.placeholder;
