@@ -11,7 +11,7 @@ angular.module('lmxCustomSelect', [])
                         ondragenter="event.dataTransfer.dropEffect='none'; event.stopPropagation(); event.preventDefault();"
                         ondragover="event.dataTransfer.dropEffect='none';event.stopPropagation(); event.preventDefault();"
                         ondrop="event.dataTransfer.dropEffect='none';event.stopPropagation(); event.preventDefault();"
-                        ng-click="!disabled && trigger()" ng-change="select(value, true)" ng-model="value"
+                        ng-click="!disabled && trigger()" ng-change="select(value, true)" ng-model="value" ng-readonly="disabled"
                         type="text" ng-attr-placeholder="{{placeholder}}">
                         
                     <div class="customSelect-scroller__wrapper" ng-class="{'_hide': !isVisible}">
@@ -114,7 +114,7 @@ angular.module('lmxCustomSelect', [])
                             return item.name.toLowerCase() === value.toLowerCase();
                         });
                         if (foundRepeatItem) {
-                            value = foundRepeatItem.value;
+                            value = $scope.subValue ? foundRepeatItem[$scope.subValue.value] : foundRepeatItem;
                         }
                     }
                     $scope.model = value;
