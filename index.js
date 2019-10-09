@@ -138,7 +138,7 @@ angular.module('lmxCustomSelect', [])
                         return;
                     }
                     if (options[1] === 'as' && params) {
-                        const text = $filter('filter')(params.repeat || $scope.repeat, {[$scope.subValue.value]: params.model || $scope.model});
+                        const text = $filter('filter')(params.repeat || $scope.repeat, {[$scope.subValue.value]: params.model || $scope.model}, true);
                         $scope.value = $scope.model && text.length ? text[0][$scope.subValue.text] : $scope.placeholder;
                     } else {
                         $scope.value = $scope.model || $scope.placeholder;
