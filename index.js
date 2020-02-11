@@ -6,7 +6,7 @@ angular.module('lmxCustomSelect', [])
                 <div outside-click="close()">
                     <input
                         class="customSelect-selected" ng-class="{'_empty': !model || disabled, '_disabled': disabled}"
-                        onfocus="$(this).select();" onclick="$(this).select();"
+                        onfocus="this.select();" onclick="this.select();"
                         ondragstart="return false" draggable="false"
                         ondragenter="event.dataTransfer.dropEffect='none'; event.stopPropagation(); event.preventDefault();"
                         ondragover="event.dataTransfer.dropEffect='none';event.stopPropagation(); event.preventDefault();"
